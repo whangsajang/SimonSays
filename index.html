@@ -30,64 +30,60 @@
 </head>
 <body>
     <div class="container">
-        <div data-key="1" class="1 game">1</div>
-        <div data-key="2" class="2 game">2</div>
-        <div data-key="3" class="3 game">3</div>
-        <div data-key="4" class="4 game">4</div>
+        <div class="1 game">1</div>
+        <div class="2 game">2</div>
+        <div class="3 game">3</div>
+        <div class="4 game">4</div>
     </div>
 
     <button class="start">START GAME</button>
 
-    <audio data-key="1" src="https://s3.amazonaws.com/freecodecamp/simonSound1.mp3"></audio>
-    <audio data-key="2" src="https://s3.amazonaws.com/freecodecamp/simonSound2.mp3"></audio>
-    <audio data-key="3" src="https://s3.amazonaws.com/freecodecamp/simonSound3.mp3"></audio>
-    <audio data-key="4" src="https://s3.amazonaws.com/freecodecamp/simonSound4.mp3"></audio>
 
 
     <script>
         var computer = [];
         var player = [];
         var notPlayable = false;
+        var clickCount = 0;
+        var audio1 = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3');
+        var audio2 = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3');
+        var audio3 = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3');
+        var audio4 = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3');
 
 
         function addToSequence(){
-            var random = Math.floor(Math.random() * 4) + 1;
+            var random = Math.floor(Math.random() * 4) ;
             computer.push(random);
-            console.log(computer);
+            }
+
+        function playSequence() {
+
+
+        }
+        function gameStart(){
+            addToSequence();
             playSequence();
+            compareSequence();
         }
 
-        function playSound(){
-            s
-        }
+        function compareSequence(){
+            for(var x = 0; x < player.length; x++){
+                if(player[x] !== computer[x]){
+                    console.log('You\'ve lost');
+                    return;
+                }
+            }
 
-        function playSequence(){
-
-                setInterval(function(){
-                    computer.forEach(function(number){
-               var sound = $('audio').attr('data-key', number);
-                sound.get(number).play();
-                    })
-                }, 1000);
-            
         }
 
         $(document).ready(function(){
            $('.start').on('click', function(){
-               addToSequence();
+               gameStart();
            })
             $('.game').on('click', function(){
-                let audio = $(this).data().key;
-                const sound = $('audio').attr('data-key', audio);
-                if(audio === 4){
-                    audio = 0;
-                }
-                sound.get(audio).play();
-
-
-
-
-
+                var pick = $(this).text();
+                var convert = parseInt(pick);
+                player.push(convert);
             })
         })
     </script>
