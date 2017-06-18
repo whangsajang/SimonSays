@@ -14,23 +14,41 @@ function addToSequence(){
     var random = Math.floor(Math.random() * 4) ;
     computer.push(colors[random]);
     console.log(computer);
+    for (var i = 0; i < computer.length; i++){
+        playSequence(i)
+    }
 }
 
-function playSequence() {
+function playSequence(i) {
     setTimeout(function(){
-        for(var x = 0; x >= computer.length; x++){
-            playAudio(x)
-        }
-    })
+        playAudio(computer[i]);
+        lightUp(computer[i]);
+    }, 1500 * i);
+
 
 }
 
-function playAudio(x){
-
+function playAudio(i){
+    switch (i){
+        case 'red':
+            audio1.play();
+            break;
+        case 'blue':
+            audio2.play();
+            break;
+        case 'yellow':
+            audio3.play();
+            break;
+        case 'green':
+            audio4.play();
+    }
 }
 
-function lightUp(){
-
+function lightUp(color){
+    var tile = $('[data-color=' + color + ']').addClass('litup');
+    setTimeout(function(){
+        tile.removeClass('litup');
+    }, 400)
 }
 function gameStart(){
     addToSequence();
@@ -56,6 +74,7 @@ $(document).ready(function(){
     $('.game').on('click', function(){
         var pick = $(this).data('color');
         player.push(pick);
+        playAudio(pick);
 
     })
 })
